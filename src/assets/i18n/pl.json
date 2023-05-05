@@ -1,0 +1,114 @@
+{
+  "MENUITEMS": {
+    "MAIN": {
+      "TEXT": "Main"
+    },
+    "DASHBOARD": {
+      "TEXT": "Dashboard",
+      "LIST": {
+        "DASHBOARD1": "Dashboard 1",
+        "DASHBOARD2": "Dashboard 2"
+      }
+    },
+    "PROJECTS": {
+      "TEXT": "Projekty",
+      "LIST": {
+        "ALL-PROJECTS": "Wszystkie Projekty",
+        "ADD-PROJECT": "Doadaj Projekt",
+        "PROJECT-DETAILS": "Szczegóły Projektu"
+      }
+    },
+    "EMPLOYEES": {
+      "TEXT": "Pracownicy",
+      "LIST": {
+        "ALL-EMPLOYEE": "Wszyscy Pracownicy",
+        "ADD-EMPLOYEE": "Doadaj Pracownika",
+        "EDIT-EMPLOYEE": "Edytuj Pracownika",
+        "PROFILE": "Profil Pracownika"
+      }
+    },
+    "CLIENTS": {
+      "TEXT": "Klienci",
+      "LIST": {
+        "ALL-CLIENTS": "Wszyscy Klienci",
+        "ADD-CLIENT": "Dodaj Klienta",
+        "EDIT-CLIENT": "Edytuj Klienta"
+      }
+    },
+    "ACCOUNTS": {
+      "TEXT": "Księgowość",
+      "LIST": {
+        "ALL-PAYMENTS": "Wszystkie Płatności",
+        "ADD-PAYMENT": "Dodaj Płatność",
+        "INVOICE": "Faktura"
+      }
+    },
+    "EMPLOYEE": {    
+        "DASHBOARD": "Dashboard",
+        "ATTENDANCE": "Frekwencja",
+        "MY-LEAVES": "Moje Urlopy",
+        "MYTEAM": "Mój Zespół",
+        "MYPROJECTS": "Moje Projekty",
+        "MYTASKS": "Moje Zadania",
+        "SETTINGS": "Ustawienia",
+        "CHAT": "Chat"
+    },
+    "LEAVES": {
+      "TEXT": "Zarządzanie Urlopami",
+      "LIST": {
+        "LEAVE-REQUESTS": "Wszystkie podania o urlop",
+        "LEAVE-BALANCE": "Saldo Urlopów",
+        "LEAVE-TYPES": "Typ urlopu"
+      }
+    },
+    "HOLIDAYS": {
+      "TEXT": "Wakacje",
+      "LIST": {
+        "ALL-HOLIDAYS": "Wszystkie Wakacje",
+        "ADD-HOLIDAY": "Dodaj Wakacje",
+        "EDIT-HOLIDAY": "Edytuj Wakacje"
+      }
+    },
+    "ATTENDANCE": {
+      "TEXT": "Aktywność",
+      "LIST": {
+        "TODAY": "Dzisiejsza Aktywność",
+        "EMPLOYEE": "Aktywność Pracownika",
+        "SHEET": "Aktywność tabela"
+      }
+    },
+    "CLIENT": {    
+      "TEXT": "Klient",
+      "DASHBOARD": "Dashboard",
+      "PROJECTS": {
+        "TEXT": "Projekty",
+        "LIST": {
+          "MY-PROJECTS": "Moje Projekty",
+          "PROJECT-DETAILS": "Szczegóły Projektu"
+        }
+      },
+      "SUPPORTS": {
+        "TEXT": "Wsparcie",
+        "LIST": {
+          "TICKETS": "Zlecenia",
+          "TICKET-DETAILS": "Szczegóły Zlecenia"
+        }
+      },
+      "BILLING": "Płatność",
+      "CHAT": "Chat",
+      "SETTINGS": "Ustawienia"
+    },
+    "APPS": {
+      "TEXT": "Aplikacje"
+    },
+    "CALENDAR": {
+      "TEXT": "Kalendarz"
+    },
+    "TASK": {
+      "TEXT": "Zadanie"
+    },
+    "CONTACTS": {
+      "TEXT": "Kontakty"
+    }
+  }
+}

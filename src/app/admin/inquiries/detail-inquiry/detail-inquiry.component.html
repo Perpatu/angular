@@ -1,0 +1,170 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="'Szczegóły Zamówienia'" [items]="['Zamówienie']"
+                [active_item]="'Szczegóły Zamówienia'">
+            </app-breadcrumb>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Szczegóły Zamówienia</h2>
+                    </div>
+                    <div class="body">
+                        <div class="wrapper wrapper-content animated fadeInUp">
+                            <div class="ibox">
+                                <div class="ibox-content">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="m-b-md">
+                                                <p (click)="openUpdateStatusInquiry(InquiryUpdateStatus)"
+                                                    class="col-blue cursor-pointer pull-right">Zmień status</p>
+                                                <h3 class="project-name">{{inquiryDetail.Inquiry_name}}</h3>
+                                            </div>
+                                            <dl>
+                                                <dt class="pull-left me-2">Status:</dt>
+                                                <dd>
+                                                    <span _ngcontent-isv-c222=""
+                                                        class="project-bedge2 project-type-Testing">
+                                                        <div _ngcontent-isv-c222="" class="pro-left">
+                                                            <ng-container
+                                                                *ngIf="inquiryDetail.Inquiry_status === 'new'">
+                                                                Nowe
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="inquiryDetail.Inquiry_status === 'under_consideration'">
+                                                                W trakcie rozpatrywania
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="inquiryDetail.Inquiry_status === 'accepted'">
+                                                                Zaakceptowane
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="inquiryDetail.Inquiry_status === 'rejected'">
+                                                                Odrzucone
+                                                            </ng-container>
+                                                        </div>
+                                                    </span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <dl class="dl-horizontal">
+
+                                                <dt class="pull-left me-2">Osoba zajmująca się zapytaniem:</dt>
+                                                <ng-container *ngIf="inquiryDetail.User != null">
+                                                    <dd>{{inquiryDetail.User.first_name}}
+                                                        {{inquiryDetail.User.last_name}} </dd>
+                                                </ng-container>
+                                                <ng-container *ngIf="inquiryDetail.User === null">
+                                                    <dd> Nikt obecnie się nie zajmuje zapytaniem </dd>
+                                                </ng-container>
+
+                                                <dt class="pull-left me-2">Klient:</dt>
+                                                <dd> {{inquiryDetail.Comapny_name}}</dd>
+
+                                            </dl>
+                                        </div>
+                                        <div class="col-lg-2" id="cluster_info">
+                                            <dl class="dl-horizontal">
+                                                <dt class="pull-left me-2">Data złożenia zapytania:</dt>
+                                                <dd> {{inquiryDetail.Inquiry_date_created}} </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 card inquiry-text">
+                                            <div class="header">
+                                                <h2>Treść Zapytania:</h2>
+                                            </div>
+                                            <p id="inquiry-content" style="margin-left: 2em"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="header">
+                                                <h2>Plik zip do zamówienia:</h2>
+                                                <i (click)="openAddInquiryFiles(filesInquiryContent)"
+                                                    class="material-icons view add-icon">add</i>
+                                            </div>
+                                            <ng-container *ngFor="let file of Files">
+                                                <p class="download-text">
+                                                    - {{file.filename}} <i
+                                                        (click)="download(file.File_id, file.filename)"
+                                                        class="material-icons view download-icon">download</i> | <i
+                                                        (click)="deleteFile(file.File_id)"
+                                                        class="material-icons view delete-icon">delete</i>
+                                                </p>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <ng-template #filesInquiryContent let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-add-file-inquiry></app-add-file-inquiry>
+        </div>
+    </ng-template>
+</div>
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <ng-template #InquiryUpdateStatus let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="body">
+                <form form class="m-4" [formGroup]="projectInquiryForm" (ngSubmit)="updateStatusInquiry()">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                            <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                <mat-label>Status Zapytania</mat-label>
+                                <mat-select placeholder="Status Zapytania" formControlName="Inquiry_status"
+                                    required>                                    
+                                    <mat-option value="accepted">
+                                       Zaakceptowane
+                                    </mat-option>
+                                    <mat-option value="rejected">
+                                        Odrzucone
+                                    </mat-option>
+                                </mat-select>                                
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                          <button class="btn-space" [disabled]="!projectInquiryForm.valid" mat-raised-button color="primary">Zmień Status</button>
+                        </div>
+                      </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+</div>

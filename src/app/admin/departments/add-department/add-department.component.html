@@ -1,0 +1,27 @@
+<form class="m-4" [formGroup]="departmentAddForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+            <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <mat-label>Nazwa Działu</mat-label>
+                <input matInput formControlName="Departments_name" required>
+                <mat-error *ngIf="departmentAddForm.get('Departments_name').hasError('required')">
+                    Nazwa Działu jest wymagana
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+            <mat-form-field class="example-full-width mb-3" appearance="outline">
+                <mat-label>Kolejność Działu</mat-label>
+                <input matInput formControlName="Departments_order" type="number" required>
+                <mat-error *ngIf="departmentAddForm.get('Departments_order').hasError('required')">
+                    Kolejność Działu jest wymagana
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                <button class="btn-space" [disabled]="!departmentAddForm.valid " mat-raised-button color="primary">Dodaj Dział</button>                
+            </div>
+        </div>
+    </div>
+</form>

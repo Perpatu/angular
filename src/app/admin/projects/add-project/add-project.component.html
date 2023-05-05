@@ -1,0 +1,430 @@
+<ng-container *ngIf="projectAddEditModal === ''">
+  <section class="content">
+    <div class="content-block">
+      <div class="block-header">
+        <app-breadcrumb [title]="'Add Projects'" [items]="['Projects']" [active_item]="'Add Projects'"></app-breadcrumb>
+      </div>
+      <div class="row clearfix">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="header">
+              <h2>Dodaj nowy Projekt</h2>
+            </div>
+            <p style="margin-left: 1em; margin-bottom: -1em;">Pola z gwiazdką("*") są wymagane</p>
+            <div style="margin-top: 2em;" class="body">
+              <form form class="m-4" [formGroup]="projectAddForm" (ngSubmit)="addProject()">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Numer projektu</mat-label>
+                      <input matInput placeholder="Numer projektu" formControlName="Project_number" required>
+                      <mat-error *ngIf="projectAddForm.get('Project_number').hasError('required')">
+                        Numer projektu jest wymagany
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Nazwa Projektu/Zamówienia</mat-label>
+                      <input matInput placeholder="Nazwa Projektu/Zamówienia" formControlName="Project_name" required>
+                      <mat-error *ngIf="projectAddForm.get('Project_name').hasError('required')">
+                        Nazwa Projektu/Zamówienia jest wymagana
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Priorytet Projektu</mat-label>
+                      <mat-select placeholder="Priorytet Projektu" formControlName="Project_priority" required>
+                        <mat-option value="Wysoki">
+                          Wysoki
+                        </mat-option>
+                        <mat-option value="Normalny">
+                          Normalny
+                        </mat-option>
+                        <mat-option value="Niski">
+                          Niski
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="projectAddForm.get('Project_priority').hasError('required')">
+                        Priorytet Projektu jest wymagany
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Status Projektu</mat-label>
+                      <mat-select placeholder="Status Projektu" formControlName="Project_status">
+                        <mat-option value="In design">
+                          W projektowaniu
+                        </mat-option>
+                        <mat-option value="Started">
+                          Rozpoczęto
+                        </mat-option>
+                        <mat-option value="Completed">
+                          Zakończony
+                        </mat-option>
+                        <mat-option value="Suspended">
+                          Wstrzymany
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Klient</mat-label>
+                      <mat-select placeholder="Klient" size="6" formControlName="Client">
+                        <mat-option *ngFor="let client of ClientList" value="{{client.Client_id}}">
+                          {{ client.Client_name }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="projectAddForm.get('Client').hasError('required')">
+                        Klient jest wymagany
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Projekt czy Zamówienie</mat-label>
+                      <mat-select placeholder="Projekt czy Zamówienie" formControlName="Project_or_order">
+                        <mat-option value="Project">
+                          Projekt
+                        </mat-option>
+                        <mat-option value="Order">
+                          Zamówienie
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="projectAddForm.get('Project_or_order').hasError('required')">
+                        To pole jest wymagane
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Data rozpoczęcia projektu</mat-label>
+                      <input matInput [matDatepicker]="pickerStart" placeholder="Data rozpoczęcia projektu"
+                        datePickerFormat="YYYY-MM-DD" formControlName="Project_date_created" required>
+                      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerStart></mat-datepicker>
+                      <mat-error *ngIf="projectAddForm.get('Project_date_created').hasError('required')">
+                        Data rozpoczęcia projektu jest wymagana
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label> Data zakończenia projektu</mat-label>
+                      <input matInput [matDatepicker]="pickerEnd" placeholder="Data zakończenia projektu"
+                        datePickerFormat="YYYY-MM-DD" formControlName="Project_end_date" required>
+                      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerEnd></mat-datepicker>
+                      <mat-error *ngIf="projectAddForm.get('Project_end_date').hasError('required')">
+                        Data zakończenia projektu jest wymagana
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Numer Zamówienie</mat-label>
+                      <input matInput placeholder="Numer Zamówienie" formControlName="Project_order_number">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                    <button class="btn-space" [disabled]="!projectAddForm.valid" mat-raised-button color="primary">Dodaj Projekt</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>
+
+<ng-container *ngIf="projectAddEditModal === 'add'">
+  <p>Pola z gwiazdką("*") są wymagane</p>
+  <div class="body">
+    <form form class="m-4" [formGroup]="projectAddForm" (ngSubmit)="addProject()">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Numer projektu</mat-label>
+            <input matInput placeholder="Numer projektu" formControlName="Project_number" required>
+            <mat-error *ngIf="projectAddForm.get('Project_number').hasError('required')">
+              Numer projektu jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nazwa Projektu/Zamówienia</mat-label>
+            <input matInput placeholder="Nazwa Projektu/Zamówienia" formControlName="Project_name" required>
+            <mat-error *ngIf="projectAddForm.get('Project_name').hasError('required')">
+              Nazwa Projektu/Zamówienia jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Priorytet Projektu</mat-label>
+            <mat-select placeholder="Priorytet Projektu" formControlName="Project_priority" required>
+              <mat-option value="Wysoki">
+                Wysoki
+              </mat-option>
+              <mat-option value="Normalny">
+                Normalny
+              </mat-option>
+              <mat-option value="Niski">
+                Niski
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="projectAddForm.get('Project_priority').hasError('required')">
+              Project Priority is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Status Projektu</mat-label>
+            <mat-select placeholder="Status Projektu" formControlName="Project_status">
+              <mat-option value="In design">
+                W projektowaniu
+              </mat-option>
+              <mat-option value="Started">
+                Rozpoczęto
+              </mat-option>
+              <mat-option value="Completed">
+                Zakończony
+              </mat-option>
+              <mat-option value="Suspended">
+                Wstrzymany
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Klient</mat-label>
+            <mat-select placeholder="Klient" size="6" formControlName="Client">
+              <mat-option *ngFor="let client of ClientList" value="{{client.Client_id}}">
+                {{ client.Client_name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="projectAddForm.get('Client').hasError('required')">
+              Klient jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Projekt czy Zamówienie</mat-label>
+            <mat-select placeholder="Projekt czy Zamówienie" formControlName="Project_or_order">
+              <mat-option value="Project">
+                Projekt
+              </mat-option>
+              <mat-option value="Order">
+                Zamówienie
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="projectAddForm.get('Project_or_order').hasError('required')">
+              To pole jest wymagane
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Data rozpoczęcia projektu</mat-label>
+            <input matInput [matDatepicker]="pickerStart" placeholder="Data rozpoczęcia projektu"
+              datePickerFormat="YYYY-MM-DD" formControlName="Project_date_created" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+            <mat-error *ngIf="projectAddForm.get('Project_date_created').hasError('required')">
+              Data rozpoczęcia projektu jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Data zakończenia projektu</mat-label>
+            <input matInput [matDatepicker]="pickerEnd" placeholder="Data zakończenia projektu"
+              datePickerFormat="YYYY-MM-DD" formControlName="Project_end_date" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+            <mat-error *ngIf="projectAddForm.get('Project_end_date').hasError('required')">
+              Data zakończenia projektu jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Numer Zamówienie</mat-label>
+            <input matInput placeholder="Numer Zamówienie" formControlName="Project_order_number">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+          <button class="btn-space" [disabled]="!projectAddForm.valid" mat-raised-button color="primary">Dodaj Projekt</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="projectAddEditModal === 'edit'">
+  <div class="body">
+    <form form class="m-4" [formGroup]="projectUpdateForm" (ngSubmit)="updateProject()">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Numer projektu</mat-label>
+            <input matInput placeholder="Numer projektu" formControlName="Project_number">            
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nazwa Projektu/Zamówienia</mat-label>
+            <input matInput placeholder="Nazwa Projektu/Zamówienia" formControlName="Project_name">            
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Priorytet</mat-label>
+            <mat-select placeholder="Priorytet" formControlName="Project_priority">
+              <mat-option value="Wysoki">
+                Wysoki
+              </mat-option>
+              <mat-option value="Normalny">
+                Normalny
+              </mat-option>
+              <mat-option value="Niski">
+                Niski
+              </mat-option>
+            </mat-select>            
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Project Status</mat-label>
+            <mat-select placeholder="Project Status" formControlName="Project_status">
+              <mat-option value="In design">
+                W projektowaniu
+              </mat-option>
+              <mat-option value="Started">
+                Rozpoczęto
+              </mat-option>
+              <mat-option value="Completed">
+                Zakończony
+              </mat-option>
+              <mat-option value="Suspended">
+                Wstrzymany
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Klient</mat-label>
+            <mat-select placeholder="Klient" size="6" formControlName="Client">
+              <mat-option *ngFor="let client of ClientList" value="{{client.Client_id}}">
+                {{ client.Client_name }}
+              </mat-option>
+            </mat-select>            
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Projekt czy Zamówienie</mat-label>
+            <mat-select placeholder="Projekt czy Zamówienie" formControlName="Project_or_order">
+              <mat-option value="Project">
+                Projekt
+              </mat-option>
+              <mat-option value="Order">
+                Zamówienie
+              </mat-option>
+            </mat-select>            
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Data rozpoczęcia projektu</mat-label>
+            <input matInput [matDatepicker]="pickerStart" placeholder="Data rozpoczęcia projektu"
+              datePickerFormat="YYYY-MM-DD" formControlName="Project_date_created">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>            
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Data zakończenia projektu</mat-label>
+            <input matInput [matDatepicker]="pickerEnd" placeholder="Data zakończenia projektu"
+              datePickerFormat="YYYY-MM-DD" formControlName="Project_end_date">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>            
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Kierwonik Projektu</mat-label>
+            <mat-select placeholder="Kierwonik Projektu" formControlName="User">
+              <mat-option *ngFor="let admin of adminList" value="{{admin.id}}">
+                {{admin.first_name}} {{admin.last_name}}
+              </mat-option>              
+            </mat-select>            
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Numer Zamówienie</mat-label>
+            <input matInput placeholder="Numer Zamówienie" formControlName="Project_order_number">
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Zespół</mat-label>
+            <mat-select placeholder="Zespół" formControlName="Project_group" multiple>
+              <mat-option *ngFor="let user of users" value="{{user.id}}">
+                {{user.first_name}} {{user.last_name}}
+              </mat-option>              
+            </mat-select>            
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+          <button class="btn-space" [disabled]="!projectUpdateForm.valid" mat-raised-button color="primary">Edytuj projekt</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>

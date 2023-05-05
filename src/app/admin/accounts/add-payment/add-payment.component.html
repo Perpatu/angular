@@ -1,0 +1,155 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Add Payments'" [items]="['Accounts']" [active_item]="'Add Payments'">
+      </app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong>Informacje o płatności</strong></h2>
+
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Nr rachunku</mat-label>
+                    <input matInput formControlName="bNo" required>
+                    <mat-error *ngIf="paymentForm.get('bNo').hasError('required')">
+                      Numer rachunku jest wymagany
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Nazwa klienta</mat-label>
+                    <input matInput formControlName="pName" required>
+                    <mat-error *ngIf="paymentForm.get('pName').hasError('required')">
+                      Nazwa klienta jest wymagana
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Imię i Nazwisko pracownika</mat-label>
+                    <mat-select formControlName="dName" required>
+                      <mat-option [value]="'1'">
+                        DR. John Deo
+                      </mat-option>
+                      <mat-option [value]="'2'">
+                        Dr.Rajesh
+                      </mat-option>
+                      <mat-option [value]="'3'">
+                        DR. Megha Trivedi
+                      </mat-option>
+                      <mat-option [value]="'4'">
+                        DR. Smith
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="paymentForm.get('dName').hasError('required')">
+                      Imię i Nazwisko pracownika jest wymagane
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Termin płatności</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="pDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="paymentForm.get('pDate').hasError('required')">
+                      Proszę wybrać datę
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Zniżka</mat-label>
+                    <input matInput formControlName="discount">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Całkowita kwota</mat-label>
+                    <input matInput formControlName="total">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Metoda płatności</mat-label>
+                    <mat-select formControlName="pMethod" required>
+                      <mat-option [value]="'1'">
+                        Gotówka
+                      </mat-option>
+                      <mat-option [value]="'2'">
+                        Czek
+                      </mat-option>
+                      <mat-option [value]="'3'">
+                        Karta kredytowa
+                      </mat-option>
+                      <mat-option [value]="'4'">
+                        Karta debetowa
+                      </mat-option>
+                      <mat-option [value]="'5'">
+                        Net Banking
+                      </mat-option>
+                      <mat-option [value]="'6'">
+                        Ubezpieczenie
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="paymentForm.get('pMethod').hasError('required')">
+                      Wymagana jest metoda płatności
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Status płatności</mat-label>
+                    <mat-select formControlName="pStatus" required>
+                      <mat-option [value]="'1'">
+                        Kompletny
+                      </mat-option>
+                      <mat-option [value]="'2'">
+                        W oczekiwaniu
+                      </mat-option>
+                      <mat-option [value]="'3'">
+                        Częściowy
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="paymentForm.get('pStatus').hasError('required')">
+                      Status płatności jest wymagany
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" mat-raised-button color="primary">Zatwierdź</button>
+                  <button type="button" mat-button>Anuluj</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

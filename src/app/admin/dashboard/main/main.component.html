@@ -1,0 +1,26 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Strona Główna'" [items]="['Home']" [active_item]="'Strona Główna'"></app-breadcrumb>
+    </div>
+    <div class="row ">
+      <ng-container *ngFor="let dep of departments; index as j">
+        <div class="col-xl-3 col-lg-6">
+          <a [routerLink]="['/admin/departments',dep.Departments_name]" [queryParams]="{ dep: dep.Departments_name }">
+            <div class="card l-bg">
+              <div class="card-statistic-4">
+                <div class="card-icon card-icon-large"></div>
+                <div class="card-content">
+                  <h4 class="card-title">{{dep.Departments_name}}</h4>                 
+                  <!--<span class="data-1">Aktywne zadania:  {{dep.quantity}}</span>-->
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</section>

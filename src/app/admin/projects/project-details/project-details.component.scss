@@ -1,0 +1,123 @@
+table {   
+    width: 100%;  
+}
+
+::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content: center;
+}
+
+::ng-deep .my-checkbox.mat-checkbox-checked .mat-checkbox-background {
+    background-color: rgb(0, 110, 255);
+}
+  
+::ng-deep .my-checkbox .mat-checkbox-background {
+    border-color: rgb(0, 110, 255);    
+}
+
+::ng-deep .my-checkbox-pause.mat-checkbox-checked .mat-checkbox-background {
+    background-color: red;
+}
+  
+::ng-deep .my-checkbox-pause .mat-checkbox-background {
+    border-color: red;    
+}
+
+::ng-deep .my-checkbox-end.mat-checkbox-checked .mat-checkbox-background {
+    background-color: green;
+}
+  
+::ng-deep .my-checkbox-end .mat-checkbox-background {
+    border-color: green;     
+}
+
+.mat-cell {
+    
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+.mat-header-cell {
+    text-align: left;
+    justify-content: center;
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+a{
+    color: #96a2b4;
+}
+
+a:hover{
+    color: #697588;
+}
+
+.view{
+    text-align: left;
+    cursor: pointer;    
+}
+
+.download{
+    cursor: pointer;
+    padding-top: 0.5em;
+}
+
+.download:hover{
+    color: #697588;
+}
+
+.my-label-start{    
+    margin-right: 2.55em;
+}
+
+.my-label-end{    
+    margin-right: 0.9em;
+}
+
+.mat-cell{    
+    text-align: center !important;    
+}
+
+.mat-header-cell {
+    text-align: center;
+}
+
+.add-comment{
+    cursor:pointer;
+    float: right;
+}
+
+.secretariat{
+    text-align: center;
+    margin-top: 2em;
+}
+
+.download-click{
+    margin-left: 1em;
+    text-align: left;
+    cursor: pointer;
+}
+
+.download-click:hover{
+    color: #697588;
+}
+
+
+.project-comments-card{
+    width: 100%;
+    height: 100%;
+    background-color: #232B3E;
+}
+
+.project-comments{   
+    margin-top: 1em;
+    max-height: 15em;
+    overflow-y: auto;
+}
+
+.comments{
+    margin-bottom: 1em;
+}
+
+h5{
+    margin-top: 1em;
+    text-align: center;
+}

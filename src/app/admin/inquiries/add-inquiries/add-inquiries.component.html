@@ -1,0 +1,107 @@
+<ng-container *ngIf="inquiryAddModal === ''">
+    <section class="content">
+        <div class="content-block">
+            <div class="block-header">
+                <app-breadcrumb [title]="'Dodaj Zapytanie'" [items]="['Zapytania']"
+                    [active_item]="'Dodaj Zapytanie'"></app-breadcrumb>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Dodaj nowe Zapytanie</h2>
+                        </div>
+                        <p style="margin-left: 1em; margin-bottom: -1em;">Pola z gwiazdką("*") są wymagane</p>
+                        <div style="margin-top: 2em;" class="body">
+                            <form form class="m-4" [formGroup]="inquiryAddForm" (ngSubmit)="addInquiry()">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                            <mat-label>Nazwa Zypytania</mat-label>
+                                            <input matInput placeholder="Nazwa Zapytania" formControlName="Inquiry_name"
+                                                required>
+                                            <mat-error *ngIf="inquiryAddForm.get('Inquiry_name').hasError('required')">
+                                                Nazwa Zypytania jest wymagana
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                        <mat-form-field class="example-full-width" appearance="outline">
+                                            <mat-label>Nazwa Firmy</mat-label>
+                                            <input matInput placeholder="Nazwa Firmy" formControlName="Comapny_name"
+                                                required>
+                                            <mat-error *ngIf="inquiryAddForm.get('Comapny_name').hasError('required')">
+                                                Nazwa Firmy jest wymagana
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>Treść zapytania</mat-label>
+                                        <textarea matInput placeholder="Treść zapytania"
+                                            formControlName="Inquiry_content" required></textarea>
+                                        <mat-error *ngIf="inquiryAddForm.get('Inquiry_content').hasError('required')">
+                                            Treść zapytania jest wymagana
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                                        <button class="btn-space" [disabled]="!inquiryAddForm.valid" mat-raised-button
+                                            color="primary">Dodaj Zapytanie</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>
+
+<ng-container *ngIf="inquiryAddModal === 'add'">
+    <p>Pola z gwiazdką("*") są wymagane</p>
+    <div class="body">
+        <form form class="m-4" [formGroup]="inquiryAddForm" (ngSubmit)="addInquiry()">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Nazwa Zypytania</mat-label>
+                        <input matInput placeholder="Nazwa Zapytania" formControlName="Inquiry_name" required>
+                        <mat-error *ngIf="inquiryAddForm.get('Inquiry_name').hasError('required')">
+                            Nazwa Zypytania jest wymagana
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Nazwa Firmy</mat-label>
+                        <input matInput placeholder="Nazwa Firmy" formControlName="Comapny_name" required>
+                        <mat-error *ngIf="inquiryAddForm.get('Comapny_name').hasError('required')">
+                            Nazwa Firmy jest wymagana
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Treść zapytania</mat-label>
+                    <textarea matInput placeholder="Treść zapytania" formControlName="Inquiry_content"
+                        required></textarea>
+                    <mat-error *ngIf="inquiryAddForm.get('Inquiry_content').hasError('required')">
+                        Treść zapytania jest wymagana
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                    <button class="btn-space" [disabled]="!inquiryAddForm.valid" mat-raised-button color="primary">Dodaj
+                        Zapytanie</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-container>

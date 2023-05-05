@@ -1,0 +1,199 @@
+<ng-container *ngIf="projectAddEditModal === ''">
+  <section class="content">
+    <div class="content-block">
+      <div class="block-header">
+        <app-breadcrumb [title]="'Dodaj Klienta'" [items]="['Klient']" [active_item]="'Dodaj Klienta'">
+        </app-breadcrumb>
+      </div>
+      <div class="row clearfix">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="header">
+              <h2><strong>Dodaj Klienta</strong></h2>
+            </div>
+            <div class="body">
+              <form class="m-4" [formGroup]="clientAddForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Nazwa Klienta</mat-label>
+                      <input matInput formControlName="Client_name" required>
+                      <mat-error *ngIf="clientAddForm.get('Client_name').hasError('required')">
+                        Nazwa Klienta jest wymagana
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Email</mat-label>
+                      <input matInput formControlName="Email" required>
+                      <mat-error
+                        *ngIf="clientAddForm.get('Email').hasError('Email') && clientAddForm.get('Email').touched">
+                        Email jest wymagany
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Address</mat-label>
+                      <input matInput formControlName="Address" type="text" required>
+                      <mat-error
+                        *ngIf="clientAddForm.get('Address').hasError('Address') && clientAddForm.get('Address').touched">
+                        Address jest wymagany
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Numer Telefonu</mat-label>
+                      <input matInput formControlName="Phone_number" type="number" required>
+                      <mat-error
+                        *ngIf="clientAddForm.get('Phone_number').hasError('Phone_number') && clientAddForm.get('Phone_number').touched">
+                        Numer Telefonu jest wymagany
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>Kolor (ustawienie dla kalendarza)</mat-label>
+                      <input matInput [value]="Colors" [style.background]="Colors" [cpOKButton]="true"
+                        [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                        [cpPosition]="'top-left'" [(colorPicker)]="Colors" [formControl]="clientAddForm.controls.Color">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                    <button class="btn-space" [disabled]="!clientAddForm.valid " mat-raised-button color="primary">Dodaj Klienta</button>
+                    <button type="button" mat-button>Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>
+
+
+<ng-container *ngIf="projectAddEditModal === 'add'">
+  <div class="body">
+    <form class="m-4" [formGroup]="clientAddForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Nazwa Klienta</mat-label>
+            <input matInput formControlName="Client_name" required>
+            <mat-error *ngIf="clientAddForm.get('Client_name').hasError('required')">
+              Nazwa Klienta jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="Email" required>
+            <mat-error *ngIf="clientAddForm.get('Email').hasError('Email') && clientAddForm.get('Email').touched">
+              Email jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="Address" type="text" required>
+            <mat-error *ngIf="clientAddForm.get('Address').hasError('Address') && clientAddForm.get('Address').touched">
+              Address jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Numer Telefonu</mat-label>
+            <input matInput formControlName="Phone_number" type="number" required>
+            <mat-error
+              *ngIf="clientAddForm.get('Phone_number').hasError('Phone_number') && clientAddForm.get('Phone_number').touched">
+              Numer Telefonu jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Kolor (ustawienie dla kalendarza)</mat-label>
+            <input matInput [value]="Colors" [style.background]="Colors" [cpOKButton]="true"
+              [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'" [cpPosition]="'top-left'"
+              [(colorPicker)]="Colors" [formControl]="clientAddForm.controls.Color">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+          <button class="btn-space" [disabled]="!clientAddForm.valid " mat-raised-button color="primary">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+
+
+
+<ng-container *ngIf="projectAddEditModal === 'edit'">
+  <div class="body">
+    <form class="m-4" [formGroup]="clientUpdateForm" (ngSubmit)="onUpdate()">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Nazwa Klienta</mat-label>
+            <input matInput formControlName="Client_name">
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="Email">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="Address" type="text">
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Numer Telefonu</mat-label>
+            <input matInput formControlName="Phone_number" type="number">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>Kolor (ustawienie dla kalendarza)</mat-label>
+            <input matInput [value]="Colors" [style.background]="Colors" [cpOKButton]="true"
+              [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'" [cpPosition]="'top-left'"
+              [(colorPicker)]="Colors" [formControl]="clientUpdateForm.controls.Color">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+          <button class="btn-space" [disabled]="!clientUpdateForm.valid " mat-raised-button
+            color="primary">Aktualizuj</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>

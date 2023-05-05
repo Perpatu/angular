@@ -1,0 +1,151 @@
+.mat-cell {
+    text-align: left;
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+.mat-header-cell {
+    text-align: center;
+    justify-content: center;
+    border: rgba(55, 55, 55) 1px solid;
+}
+  
+::ng-deep .mat-sort-header-container {
+    text-align: center;
+    justify-content: center;
+}
+
+.mat-column-Project_number {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    width: 20% !important;
+    text-align: left;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_order_number {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;   
+    width: 15%;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_name {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center; 
+    width: 15%;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_client {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_order_number {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_date_created {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center; 
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_order_number {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_end_date {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;   
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_priority {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    width: 8%;
+    text-align: center;  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_progress {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;    
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Project_status {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;   
+    width: 13%;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-User_created {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;  
+    width: 13%;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mat-column-Option {    
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    text-align: center;  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}

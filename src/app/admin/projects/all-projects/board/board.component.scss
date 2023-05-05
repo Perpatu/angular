@@ -1,0 +1,92 @@
+table {
+    width: 100%;    
+}
+
+.mat-cell {
+    text-align: left;
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+.mat-header-cell {
+    text-align: center;
+    justify-content: center;
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+.name-column{
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.name-column:hover{
+    font-size: 15px;
+}
+
+.cell{
+    text-align: center;
+}
+
+.text-name{
+    margin-left: 1em;
+    border-bottom: rgba(55, 55, 55) 1px solid;    
+}
+
+.text-name:hover{
+    background-color: #222938;
+}
+
+.text-date-end{     
+    border-bottom: rgba(55, 55, 55) 1px solid;
+}
+
+.text-edit{
+    margin-left: 1em;
+}
+
+::ng-deep .mat-sort-header-container {
+    text-align: center;
+    justify-content: center;
+}
+
+.search-project{
+    margin-left: 90%;
+}
+
+.mat-header-cell {
+    flex-direction: column;
+    justify-content: center;
+}  
+
+i {
+    cursor: pointer;    
+}
+
+.name-column{
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.name-column:hover{
+    font-size: 15px;
+}
+
+.text-date-end{     
+    border-bottom: rgba(55, 55, 55) 1px solid;
+}
+
+.text-name{
+    margin-left: 1em;
+    border-bottom: rgba(55, 55, 55) 1px solid;    
+}
+
+.text-name:hover{
+    background-color: #222938;
+}
+
+.text-date-end{     
+    border-bottom: rgba(55, 55, 55) 1px solid;
+}
+
+.text-edit{
+    margin-left: 1em;
+}

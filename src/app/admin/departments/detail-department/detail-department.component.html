@@ -1,0 +1,173 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header">
+            <app-breadcrumb [title]="'Działy'" [items]="['Działy']" [active_item]="'Działy'">
+            </app-breadcrumb>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="wrapper">
+                            <nav class="nav-main">
+                                <div class="actions">
+
+                                </div>
+                            </nav>
+                            <main class="main">
+                                <h3 class="header-dep">{{currentDepartment}}</h3>
+                                <table mat-table [dataSource]="dataSource" matSort>
+                                    <ng-container *ngFor="let column of departmentColumns">
+                                        <ng-container [matColumnDef]="column">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                {{ column }}
+                                            </th>
+                                            <td class="mat-cell-center" mat-cell *matCellDef="let element">
+                                                <ng-container *ngIf="column === 'File'">
+                                                    <i class="material-icons view"
+                                                        (click)="openPdfFile(pdfFile, element[column.toLowerCase()]['File_id'])">visibility</i>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    *ngIf="column === 'filename' && element[column.toLowerCase()]['filename'].split('.')[element[column.toLowerCase()]['filename'].split('.').length -1] === 'pdf'">
+                                                    <a href="http://98.71.193.168:8000/file/download/{{element[column.toLowerCase()]['File_id']}}/"
+                                                        target="_blank" download>
+                                                        {{ element[column.toLowerCase()]['filename'] }}
+                                                    </a>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="column === 'filename' && element[column.toLowerCase()]['filename'].split('.')[element[column.toLowerCase()]['filename'].split('.').length -1] != 'pdf'">
+                                                    <div class="download"
+                                                        (click)="download(element[column.toLowerCase()]['File_id'], element[column.toLowerCase()]['filename'])">
+                                                        {{ element[column.toLowerCase()]['filename'] }}
+                                                        <div *ngIf="downloading"
+                                                            class="spinner-border spinner-border-sm" role="status">
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="element[column.toLowerCase()]['chosen'] === true">
+                                                    <ng-container
+                                                        *ngIf="element[column.toLowerCase()]['Queue_logic']['User_start'] === false && element[column.toLowerCase()]['permission'] === false">
+                                                        <mat-checkbox class="my-checkbox" disabled>Start
+                                                        </mat-checkbox>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="element[column.toLowerCase()]['Queue_logic']['User_start'] === false && element[column.toLowerCase()]['permission'] === true">
+                                                        <mat-checkbox
+                                                            (click)="start(element[column.toLowerCase()]['Queue_logic']['Queue_id'], element[column.toLowerCase()]['Project'])"
+                                                            class="my-checkbox"
+                                                            [(ngModel)]="element[column.toLowerCase()]['Queue_logic']['User_start']">Start
+                                                        </mat-checkbox>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="element[column.toLowerCase()]['Queue_logic']['User_start'] === true && element[column.toLowerCase()]['Queue_logic']['User_paused'] === false && element[column.toLowerCase()]['Queue_logic']['User_end'] === false">
+                                                        <mat-checkbox
+                                                            (click)="startRemove(element[column.toLowerCase()]['Queue_logic']['Queue_id'], element[column.toLowerCase()]['Project'])"
+                                                            class="my-checkbox"
+                                                            [(ngModel)]="element[column.toLowerCase()]['Queue_logic']['User_start']"><span
+                                                                class="my-label-start">Start</span>
+                                                        </mat-checkbox>
+                                                        <br>
+                                                        <mat-checkbox
+                                                            (click)="pause(element[column.toLowerCase()]['Queue_logic']['Queue_id'], element[column.toLowerCase()]['Project'])"
+                                                            class="my-checkbox-pause"
+                                                            [(ngModel)]="element[column.toLowerCase()]['Queue_logic']['User_paused']"><span
+                                                                class="my-label">Wstrzymaj</span></mat-checkbox>
+                                                        <br>
+                                                        <mat-checkbox
+                                                            (click)="end(element[column.toLowerCase()]['File_id'], element[column.toLowerCase()]['Queue_logic']['Queue_id'], element[column.toLowerCase()]['Dep_choice_id'], element[column.toLowerCase()]['Department_id'], element[column.toLowerCase()]['Project'])"
+                                                            class="my-checkbox-end"
+                                                            [(ngModel)]="element[column.toLowerCase()]['Queue_logic']['User_end']"><span
+                                                                class="my-label-end">Zakończ</span>
+                                                        </mat-checkbox>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="element[column.toLowerCase()]['Queue_logic']['User_start'] === true && element[column.toLowerCase()]['Queue_logic']['User_paused'] === true && element[column.toLowerCase()]['Queue_logic']['User_end'] === false">
+                                                        <mat-checkbox
+                                                            (click)="pauseRemove(element[column.toLowerCase()]['Queue_logic']['Queue_id'], element[column.toLowerCase()]['Project'])"
+                                                            class="my-checkbox-pause"
+                                                            [(ngModel)]="element[column.toLowerCase()]['Queue_logic']['User_paused']">Wstrzymaj
+                                                        </mat-checkbox>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="element[column.toLowerCase()]['Queue_logic']['User_start'] === true && element[column.toLowerCase()]['Queue_logic']['User_paused'] === false && element[column.toLowerCase()]['Queue_logic']['User_end'] === true">
+                                                        <mat-checkbox
+                                                            (click)="endRemove(element[column.toLowerCase()]['File_id'], element[column.toLowerCase()]['Queue_logic']['Queue_id'], element[column.toLowerCase()]['Dep_choice_id'], element[column.toLowerCase()]['order'], element[column.toLowerCase()]['Project'])"
+                                                            class="my-checkbox-end"
+                                                            [(ngModel)]="element[column.toLowerCase()]['Queue_logic']['User_end']">Zakończ
+                                                        </mat-checkbox>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="column === 'Comments' && element[column.toLowerCase()]['comments'].length > 0">
+                                                    <i class="material-icons add-comment mt-1"
+                                                        (click)="openAddCommentFile(commentFile, element[column.toLowerCase()]['File_id'])">add</i>
+
+                                                    <ng-container
+                                                        *ngFor="let com of element[column.toLowerCase()]['comments']">
+                                                        <p class="text-start mt-2">
+                                                            <b>{{com.user}}</b>: {{com.text}}
+                                                            <i class="material-icons view"
+                                                                (click)="deleteComment(com.id, com.Project_id)">delete_forever</i>
+                                                        </p>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="column === 'Comments' && element[column.toLowerCase()]['comments'].length === 0">
+                                                    <i class="material-icons add-comment mt-1"
+                                                        (click)="openAddCommentFile(commentFile, element[column.toLowerCase()]['File_id'])">add</i>
+                                                </ng-container>
+
+                                            </td>
+                                        </ng-container>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="departmentColumns">
+                                    </tr>
+                                    <tr mat-row *matRowDef="let row; columns: departmentColumns;">
+                                    </tr>
+                                </table>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-10">
+    <ng-template #pdfFile let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <ngx-extended-pdf-viewer [src]="pathToFile" [useBrowserLocale]="true"></ngx-extended-pdf-viewer>
+        </div>
+    </ng-template>
+</div>
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <ng-template #commentFile let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-comment-file [File_id]="File_id"> </app-comment-file>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,144 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Wszyscy Klienci'" [items]="['Klienci']" [active_item]="'Wszyscy Klienci'">
+      </app-breadcrumb>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="table-responsive">
+              <div class="materialTableHeader">
+                <div class="row">
+                  <div class="col-8">
+                    <ul class="header-buttons-left ms-0">
+                      <li class="dropdown">
+                        <h2>Klienci</h2>
+                      </li>
+                      <li class="dropdown m-l-20">
+                        <mat-form-field appearance="fill">
+                          <mat-label class="text-label">Szukaj Klienta</mat-label>
+                          <input matInput (keyup)="FilterFn($event)" placeholder="Szukaj" #input>
+                        </mat-form-field>
+                      </li>
+                      <li>
+                        <div class="m-l-10" matTooltip="ADD">
+                          <button mat-mini-fab color="primary" (click)="addNewClient(formContent)">
+                            <mat-icon class="col-white">add</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="m-l-10" matTooltip="REFRESH">
+                          <button mat-mini-fab color="primary" (click)="refresh()">
+                            <mat-icon class="col-white">refresh</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-4">
+                    <ul class="header-buttons">
+                      <li>
+                        <div class="export-button m-l-10" matTooltip="XLSX">
+                          <img src="assets/images/icons/xlsx.png" alt=""
+                            (click)="exporter.exportTable('xlsx', {fileName:'assets-list', sheet: 'sheet1'})" />
+                        </div>
+                      </li>
+                      <li>
+                        <div class="export-button m-l-10" matTooltip="TXT">
+                          <img src="assets/images/icons/txt.png" alt="" (click)="exporter.exportTable('txt')" />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <mat-table #table matTableExporter [dataSource]="dataSource" matSort class="mat-cell"
+                #exporter="matTableExporter">
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Client</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <a
+                      href="http://98.71.193.168:4200/#/admin/clients/project-client/{{element.Client_name}}/">{{element.Client_name}}</a>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="color">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Kolor</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <ng-conteiner *ngIf="element.Color">
+                      <div [style.backgroundColor]="element.Color" class="color-square"></div>
+                    </ng-conteiner>
+                    <ng-conteiner *ngIf="!element.Color">
+                      <div [style.backgroundColor]="'#3788D8'" class="color-square"></div>
+                    </ng-conteiner>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="address">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    {{element.Address}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    {{element.Email}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="phone">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    {{element.Phone_number}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="date_added">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Date added</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    {{element.Date_add}}
+                  </mat-cell>
+                </ng-container>
+                <!-- actions -->
+                <ng-container matColumnDef="options">
+                  <mat-header-cell class="pr-0" *matHeaderCellDef>Options</mat-header-cell>
+                  <mat-cell *matCellDef="let element;" class="pr-0">
+                    <button mat-icon-button color="accent" (click)="editClient(formContent, element)" class="tbl-action-btn">
+                      <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                    </button>
+                    <button mat-icon-button color="accent" (click)="deleteClient(element)" class="tbl-action-btn">
+                      <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+              </mat-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+  <ng-template #formContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="material-icons">close</i></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-add-client [projectAddEditModal]="projectAddEditModal" [clientData]="clientData">
+
+      </app-add-client>
+    </div>
+  </ng-template>
+</div>

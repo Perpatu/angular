@@ -1,0 +1,108 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <img [src]='employees.img' alt="avatar">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 ms-2 me-2 font-17">
+            {{dialogTitle}}</div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>zamknij</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="employeesForm" (ngSubmit)="submit">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nazwa</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="employeesForm.get('name').hasError('required')">
+              Nazwa jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>dział</mat-label>
+            <input matInput formControlName="department" required>
+            <mat-icon matSuffix>business_center</mat-icon>
+            <mat-error *ngIf="employeesForm.get('department').hasError('required')">
+              Dział jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>rola</mat-label>
+            <input matInput formControlName="role" required>
+            <mat-icon matSuffix>flag</mat-icon>
+            <mat-error *ngIf="employeesForm.get('role').hasError('required')">
+              rola jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Stopień</mat-label>
+            <input matInput formControlName="degree" required>
+            <mat-icon matSuffix>school</mat-icon>
+            <mat-error *ngIf="employeesForm.get('degree').hasError('required')">
+              Dział jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Telefon</mat-label>
+            <input matInput formControlName="mobile" type="number">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="employeesForm.get('mobile').hasError('required')">
+              Telefon jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="employeesForm.get('email').hasError('required') || employeesForm.get('email').touched">
+              Proszę wpisać aktualny adres e-mail
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Data dołączenia</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="employeesForm.get('date').hasError('required')">
+              Proszę wybrać datę
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row" align="end">
+            <button mat-raised-button color="primary" [type]="submit" [disabled]="!employeesForm.valid"
+              [mat-dialog-close]="1" (click)="confirmAdd()">Zapisz</button>
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Anuluj</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

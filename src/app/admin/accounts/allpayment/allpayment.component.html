@@ -1,0 +1,260 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Secretariat'" [items]="['Projects']" [active_item]="'All Projects'"></app-breadcrumb>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="wrapper">
+              <nav class="nav-main">
+                <div class="actions">
+                </div>
+              </nav>
+              <main class="main">
+                <div>
+                  <mat-form-field style="margin-right: 5em;" appearance="standard" *ngIf="tableStorageShow === 'false'">
+                    <mat-label>Szukaj projektu</mat-label>
+                    <input matInput (keyup)="FilterFn($event)" placeholder="Type something about project">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="standard" *ngIf="tableStorageShow === 'false'">
+                    <mat-select (selectionChange)="showProject()" [(ngModel)]="selectedStatus">
+                      <mat-option value="ACTIVE_PROJECT"> Nie zafakturowane </mat-option>
+                      <mat-option value="END_PROJECT"> Zafakturowane </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <button mat-raised-button type="button" style="float: right; margin-right: 10px;"
+                    (click)="changeTable()" color="primary">
+                    Zmień wygląd tabeli
+                  </button>
+
+                  <ng-container *ngIf="tableStorageShow === 'true'">
+                    <br>
+                    <br>
+                    <br>
+                  </ng-container>
+
+                </div>
+
+                <div class="board">
+                  <table *ngIf="tableStorageShow === 'false'" mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="Project_number">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Projektu </th>
+                      <td mat-cell *matCellDef="let element"> <a
+                          href="http://98.71.193.168:4200/#/admin/projects/projectDetails/{{element.Project_id}}">{{element.Project_number}}
+                        </a></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Project_order_number">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Zamówienia </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Project_order_number}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Project_name">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa Projektu </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Project_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Project_client">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Klient </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Client.Client_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Project_date_created">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Rozpoczęcia </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Project_date_created}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Project_end_date">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Zakończenia </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Project_end_date.split('T')[0]}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Manager">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Kierownik Projektu </th>
+                      <td mat-cell *matCellDef="let element"> {{element.User.first_name}} {{element.User.last_name}}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Invoice">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice </th>
+                      <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="element.Project_invoice === 'NO'">
+                          NIE
+                        </ng-container>
+                        <ng-container *ngIf="element.Project_invoice === 'YES'">
+                          TAK
+                        </ng-container>
+                        <ng-container *ngIf="element.Project_invoice === 'YES (LACK OF INVOICE)'">
+                          TAK (BRAK FAKTURY)
+                        </ng-container>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Option">
+                      <th mat-header-cell *matHeaderCellDef> Edit </th>
+                      <td mat-cell *matCellDef="let element">
+                        <i class="material-icons" (click)="openEditProject(formContent, element.Project_id)"
+                          data-toggle="tooltip" data-placement="top" title="EDYTUJ PROJEKT"
+                          style="cursor: pointer;">mode_edit</i>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"> </tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+
+                  </table>
+
+                  <table *ngIf="tableStorageShow === 'true'" mat-table [dataSource]="dataSourceClient" matSort>
+                    <ng-container matColumnDef="Client">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Klient </th>
+                      <td class="name-column" mat-cell *matCellDef="let element">
+                        <div *ngFor="let clientName of getClientKeys(element)"
+                          (click)="showDataClientTable(element[clientName][0].Client.Client_name)">
+                          {{ clientName }}
+                          <br>
+                          <ng-container
+                            *ngIf="show && projectsClient === projectsClient && currentUser.role === 'Admin'">
+                            <ng-container *ngFor="let project of element[projectsClient]; index as i">
+                              <p class="text-name">
+                                {{i+1}}.
+                                <a target="_blank"
+                                  href="http://98.71.193.168:4200/#/admin/projects/projectDetails/{{project.Project_id}}">{{project.Project_number}}</a>
+                              </p>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="show" matColumnDef="start_date">
+                      <th mat-header-cell *matHeaderCellDef>Data Rozpoczęcia</th>
+                      <td class="cell" mat-cell *matCellDef="let element">
+                        <br>
+                        <ng-container *ngIf="show && projectsClient === projectsClient">
+                          <ng-container *ngFor="let project of element[projectsClient]">
+                            <p class="text-date-end">
+                              {{ project.Project_date_created }}
+                            </p>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="show" matColumnDef="date_end">
+                      <th mat-header-cell *matHeaderCellDef>Data Zakończenia</th>
+                      <td class="cell" mat-cell *matCellDef="let element">
+                        <br>
+                        <ng-container *ngIf="show && projectsClient === projectsClient">
+                          <ng-container *ngFor="let project of element[projectsClient]">
+                            <p class="text-date-end">
+                              {{ project.Project_end_date }}
+                            </p>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="show" matColumnDef="priority">
+                      <th mat-header-cell *matHeaderCellDef>Priorytet</th>
+                      <td class="cell" mat-cell *matCellDef="let element">
+                        <br>
+                        <ng-container *ngIf="show && projectsClient === projectsClient">
+                          <ng-container *ngFor="let project of element[projectsClient]">
+                            <p class="text-date-end">
+                              {{ project.Project_priority }}
+                            </p>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="show" matColumnDef="progress">
+                      <th mat-header-cell *matHeaderCellDef>Procent Ukończenia</th>
+                      <td class="cell" mat-cell *matCellDef="let element">
+                        <br>
+                        <ng-container *ngIf="show && projectsClient === projectsClient">
+                          <ng-container *ngFor="let project of element[projectsClient]">
+                            <p class="text-date-end">
+                              {{ project.Project_progress }}%
+                            </p>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="show" matColumnDef="project_manager">
+                      <th mat-header-cell *matHeaderCellDef>Kierownik Projektu</th>
+                      <td class="cell" mat-cell *matCellDef="let element">
+                        <br>
+                        <ng-container *ngIf="show && projectsClient === projectsClient">
+                          <ng-container *ngFor="let project of element[projectsClient]">
+                            <p class="text-date-end">
+                              {{ project.User.first_name }} {{ project.User.last_name }}
+                            </p>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="currentUser.role === 'Admin'" matColumnDef="option">
+                      <th mat-header-cell *matHeaderCellDef> Edytuj </th>
+                      <td class="cell" mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="show && projectsClient === projectsClient">
+                          <ng-container *ngFor="let project of element[projectsClient]; index as i">                            
+                            <i class="material-icons" (click)="openEditProject(formContent, project.Project_id)"
+                          data-toggle="tooltip" data-placement="top" title="EDYTUJ PROJEKT"
+                          style="cursor: pointer;">mode_edit</i>
+                            <br>
+                          </ng-container>
+                        </ng-container>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsClient"> </tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsClient;"> </tr>
+                  </table>
+                </div>
+
+
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+  <ng-template #formContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="material-icons">close</i></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="m-4" [formGroup]="projectUpdateForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Czy Projekt ma być zafakturowany?</mat-label>
+          <mat-select formControlName="Project_invoice">
+            <mat-option [value]="'YES'">
+              TAK
+            </mat-option>
+            <mat-option [value]="'YES (LACK OF INVOICE)'">
+              TAK BRAK FAKTURY
+            </mat-option>
+            <mat-option [value]="'NO'">
+              NIE
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="col-md-12">
+          <button class="btn-space" mat-raised-button color="primary">Aktualizuj</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

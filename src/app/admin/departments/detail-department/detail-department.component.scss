@@ -1,0 +1,89 @@
+table {   
+    width: 100%;  
+}
+
+.mat-cell {
+    text-align: left;
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+.mat-header-cell {
+    text-align: center;
+    justify-content: center;
+    border: rgba(55, 55, 55) 1px solid;
+}
+
+::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content: center;
+}
+
+::ng-deep .my-checkbox.mat-checkbox-checked .mat-checkbox-background {
+    background-color: rgb(0, 110, 255);
+}
+  
+::ng-deep .my-checkbox .mat-checkbox-background {
+    border-color: rgb(0, 110, 255);    
+}
+
+::ng-deep .my-checkbox-pause.mat-checkbox-checked .mat-checkbox-background {
+    background-color: red;
+}
+  
+::ng-deep .my-checkbox-pause .mat-checkbox-background {
+    border-color: red;    
+}
+
+::ng-deep .my-checkbox-end.mat-checkbox-checked .mat-checkbox-background {
+    background-color: green;
+}
+  
+::ng-deep .my-checkbox-end .mat-checkbox-background {
+    border-color: green;     
+}
+
+a{
+    color: #96a2b4;
+}
+
+a:hover{
+    color: #697588;
+}
+
+.view{
+    cursor: pointer;    
+}
+
+.download{
+    cursor: pointer;
+    padding-top: 0.5em;
+}
+
+.download:hover{
+    color: #697588;
+}
+
+.my-label-start{    
+    margin-right: 2.6em;
+}
+
+.my-label-end{    
+    margin-right: 1em;
+}
+
+.mat-cell{    
+    text-align: center !important;    
+}
+
+.mat-header-cell {
+    text-align: center;
+}
+
+.add-comment{
+    cursor:pointer;
+    float: right;
+}
+
+.header-dep{
+    margin-bottom: 1em;
+}

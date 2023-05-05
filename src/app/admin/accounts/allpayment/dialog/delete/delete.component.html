@@ -1,0 +1,26 @@
+<div class="container">
+  <h3 mat-dialog-title>Jesteś pewny?</h3>
+  <div mat-dialog-content>
+    <div class="row">
+      <!--Gift Icon-->
+      <div class="col text-center"> <i class="far fa-times-circle fa-6x col-red"></i> </div>
+      <!--Modal Text-->
+      <div class="col-8">
+        <dl class="dl-horizontal">
+          <dt class="pull-left me-2">Nazwa klienta:</dt>
+          <dd>{{data.pName}}</dd>
+          <dt class="pull-left me-2">Imię i nazwisko pracownika:</dt>
+          <dd> {{ data.dName }}</dd>
+          <dt class="pull-left me-2">Całkowity:</dt>
+          <dd> {{ data.total }}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <mat-dialog-actions align="end" class="mb-1">
+    <button mat-flat-button color="warn" [mat-dialog-close]="1" (click)="confirmDelete()">
+      Usuń
+    </button>
+    <button mat-flat-button (click)="onNoClick()" tabindex="-1">Anuluj</button>
+  </mat-dialog-actions>
+</div>

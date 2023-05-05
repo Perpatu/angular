@@ -1,0 +1,161 @@
+<section class="content">
+    <div class="content-block">
+        <div class="block-header">
+            <!-- breadcrumb -->
+            <app-breadcrumb [title]="'Wszystkie Zapytania'" [items]="['Zapytania']"
+                [active_item]="'Wszystkie Zapytania'"></app-breadcrumb>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="wrapper">
+                            <nav class="nav-main">
+                                <div class="actions">
+                                </div>
+                            </nav>
+                            <main class="main">
+                                <div>
+                                    <mat-form-field appearance="standard">
+                                        <mat-select (selectionChange)="showInquiry()" [(ngModel)]="selectedStatus">
+                                            <mat-option value="new"> Nowe Zapytania </mat-option>
+                                            <mat-option value="under_consideration"> W trakcie rozpatrywania </mat-option>
+                                            <mat-option value="accepted"> Zaakceptowane Zapytania </mat-option>
+                                            <mat-option value="rejected"> Odrzucone Zapytania </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <button (click)="openAddInquiry(InquiryAdd)" mat-raised-button type="button"
+                                        style="float: right;" color="primary">Dodaj Zapytanie</button>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="board">
+                                    <table mat-table [dataSource]="dataSource" matSort>
+                                        <ng-container matColumnDef="Inquiry_name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa zapytania </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <a
+                                                    href="http://192.168.1.119:4203/#/admin/inquiries/detailInquiry/{{element.Inquiry_id}}">{{element.Inquiry_name}}
+                                                </a>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Comapny_name">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa Firmy </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.Inquiry_name}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Inquiry_content">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Treść Zapytania </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.Inquiry_content}} </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Status">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <ng-container *ngIf="element.Inquiry_status === 'new'">
+                                                    Nowe
+                                                </ng-container>
+                                                <ng-container *ngIf="element.Inquiry_status === 'under_consideration'">
+                                                    W trakcie rozpatrywania
+                                                </ng-container>
+                                                <ng-container *ngIf="element.Inquiry_status === 'accepted'">
+                                                    Zaakceptowane
+                                                </ng-container>
+                                                <ng-container *ngIf="element.Inquiry_status === 'inactive'">
+                                                    Odrzucone
+                                                </ng-container>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="User">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Osoba zajmująca się
+                                                zapytaniem </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <ng-container *ngIf="element.User != null">
+                                                    {{element.User.first_name}} {{element.User.last_name}}
+                                                </ng-container>
+                                                <ng-container *ngIf="element.User === null">
+                                                    Nikt obecnie się nie zajmuje zapytaniem
+                                                </ng-container>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="Options">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Edytuj | Usuń </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <i class="material-icons"
+                                                    (click)="openUpdateStatusInquiry(InquiryUpdateStatus, element.Inquiry_id)"
+                                                    data-toggle="tooltip" data-placement="top" title="EDIT PROJECT"
+                                                    style="cursor: pointer; margin-right: 15px;">mode_edit</i>
+                                                <i class="material-icons" (click)="deleteInquiry(element.Inquiry_id)"
+                                                    data-toggle="tooltip" data-placement="top" title="Usuń Zapytanie"
+                                                    style="cursor: pointer;">delete_forever</i>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"> </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"> </tr>
+                                    </table>
+                                </div>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <ng-template #InquiryUpdateStatus let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="body">
+                <form form class="m-4" [formGroup]="projectInquiryForm" (ngSubmit)="updateStatusInquiry()">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                            <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                <mat-label>Status Zapytania</mat-label>
+                                <mat-select placeholder="Status Zapytania" formControlName="Inquiry_status" required>
+                                    <mat-option value="accepted">
+                                        Zaakceptowane
+                                    </mat-option>
+                                    <mat-option value="rejected">
+                                        Odrzucone
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                            <button class="btn-space" [disabled]="!projectInquiryForm.valid" mat-raised-button
+                                color="primary">Zmień Status</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <ng-template #InquiryAdd let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{titleModal}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true"><i class="material-icons">close</i></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-add-inquiries [inquiryAddModal]="inquiryAddModal"></app-add-inquiries>
+        </div>
+    </ng-template>
+</div>

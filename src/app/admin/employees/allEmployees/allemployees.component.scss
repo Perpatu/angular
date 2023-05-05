@@ -1,0 +1,17 @@
+.table-container {
+    max-height: 500px;
+    margin-bottom: 2em;
+    overflow-y: auto; 
+}
+
+.table-responsive{
+    overflow-x: hidden; 
+}
+
+.text-label{
+    font-size: 15px;
+}
+
+.export-button{
+    cursor: pointer;
+}

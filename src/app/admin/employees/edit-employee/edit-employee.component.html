@@ -1,0 +1,165 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Edit Employee'" [items]="['Employees']" [active_item]="'Edit Employee'">
+      </app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2>Edytuj pracownika</h2>
+
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="docForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Imię</mat-label>
+                    <input matInput formControlName="first" required>
+                    <mat-error *ngIf="docForm.get('first').hasError('required')">
+                      Imię jest wymagane
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Nazwisko</mat-label>
+                    <input matInput formControlName="last">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Płeć</mat-label>
+                    <mat-select formControlName="gender" required>
+                      <mat-option [value]="'Male'">
+                        Mężczyzna
+                      </mat-option>
+                      <mat-option [value]="'Female'">
+                        Kobieta
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="docForm.get('gender').hasError('required')">
+                      Płeć jest wymagana
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Telefon</mat-label>
+                    <input matInput formControlName="mobile" type="number" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Hasło</mat-label>
+                    <input matInput formControlName="password" type="password" required>
+                    <mat-error *ngIf="docForm.get('password').hasError('required')">
+                      Hasło jest wymagane
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Wprowadź ponownie hasło</mat-label>
+                    <input matInput formControlName="conformPassword" type="password" required>
+                    <mat-error *ngIf="docForm.get('conformPassword').hasError('required')">
+                      Ponownie wprowadzanie hasła jest wymagane
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Przeznaczenie</mat-label>
+                    <input matInput formControlName="designation">
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Wybierz dział</mat-label>
+                    <mat-select formControlName="department" required>
+                      <mat-option [value]="'1'">
+                        Development
+                      </mat-option>
+                      <mat-option [value]="'2'">
+                        Designing
+                      </mat-option>
+                      <mat-option [value]="'3'">
+                        Testing
+                      </mat-option>
+                      <mat-option [value]="'4'">
+                        HR
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="docForm.get('department').hasError('required')">
+                      Select Any Department
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Addres</mat-label>
+                    <textarea matInput formControlName="address"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="docForm.get('email').hasError('email') && docForm.get('email').touched">
+                      Proszę wpisać aktualny adres e-mail
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Data urodzenia</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dob" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="docForm.get('dob').hasError('required')">
+                      Proszę wybrać datę
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Edukacja</mat-label>
+                    <textarea matInput formControlName="education"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-label>Załaduj obrazek</mat-label>
+                  <app-file-upload formControlName="uploadImg"></app-file-upload>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [disabled]="!docForm.valid " mat-raised-button
+                    color="primary">Zatwierdź</button>
+                  <button type="button" mat-button>Anuluj</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

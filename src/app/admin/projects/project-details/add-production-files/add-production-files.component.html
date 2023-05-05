@@ -1,0 +1,42 @@
+<label for="file">Choose Files (.pdf, .dxf, .xlsx, .xls, .txt, .png, .jpg, .jpeg, .rar, .zip, .doc,
+    .docx)</label>
+
+<div *ngIf="myFiles.length > 0" style="height:200px; width: 100%; overflow:auto;">
+    <table class="table table-bordered table-striped mb-0">
+        <thead class="header" scope="col">
+            <tr class="table-secondary" style="text-align: center;">
+                <th class="th-font sticky-top" style="width: 50px;">Delete</th>
+                <th class="sticky-top">File name</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let files of myFiles; index as i">
+            <tr style="text-align: left;">
+                <td>
+                    <i class="material-icons" style="cursor: pointer;" (click)="clear(i)"
+                        data-toggle="tooltip" data-placement="top" title="Delete File">delete_forever
+                    </i>
+                </td>
+                <td>
+                    <b>{{files['name']}}</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form [formGroup]="myForm" (ngSubmit)="submit()">
+    <div class="form-group">
+        <button mat-raised-button color="primary" type="submit"
+            style="margin-top: 25px; margin-bottom: 1em; float: right;">
+            Wyslij pliki
+            <div *ngIf="upload" class="spinner-border spinner-border-sm" role="status"></div>
+        </button>
+
+
+        <input formControlName="file" id="file" type="file" multiple class="form-control" accept=".pdf, .dxf, .xlsx, .xls, .txt, .png, .jpg, .jpeg, .rar, .zip, .doc,
+            .docx" (change)="onFileChange($event)">
+        <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+            <div *ngIf="f.file.errors && f.file.errors['required']">Plik jest wymagany.</div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,83 @@
+<div class="auth-container">
+  <div class="row auth-main">
+    <div class="col-sm-6 px-0 d-none d-sm-block">
+      <div class="left-img" style="background-image: url(assets/images/pages/login.jpg); filter: brightness(50%);">        
+        <div style="width: 126px; height: 126px; margin-bottom: 15em;">
+          <svg style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+            xml:space="preserve" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"
+            version="1.1" viewBox="0 0 800 800" height="100%" width="100%">
+            <g transform="matrix(0.894634,0,0,0.894634,-1.42109e-13,56.9077)">
+              <path style="fill:rgb(255, 0, 0);fill-rule:nonzero;"
+                d="M222.88,0L291.82,0L298.34,0.51C338.28,0.72 378.23,0.97 418.17,1.27C399.7,35.7 381.22,70.14 362.73,104.58C333.76,104.16 304.79,103.73 275.82,103.33C221.7,196.95 167.53,290.53 113.4,384.14C166.7,479.42 220.02,574.69 273.31,669.98C296.8,670.41 320.29,670.81 343.78,671.25C437.43,511.3 531.01,351.3 624.69,191.37C642.73,224.14 660.78,256.9 678.87,289.64C597.95,427.46 516.96,565.24 436.02,703.05C423.45,724.35 411.03,745.75 398.37,767L222.86,767C148.58,639.18 74.24,511.39 0,383.55L0,383.48C74.25,255.63 148.59,127.83 222.88,0Z">
+              </path>
+            </g>
+            <g transform="matrix(0.894634,0,0,0.894634,-1.42109e-13,56.9077)">
+              <path style="fill:white;fill-rule:nonzero;"
+                d="M495.82,0L671.31,0C745.62,127.82 819.9,255.65 894.22,383.46C822.11,507.59 749.94,631.68 677.81,755.79C675.59,759.52 673.55,763.35 671.21,767L474.92,767C493.86,732.21 512.59,697.29 531.42,662.44C560.39,662.83 589.36,663.27 618.34,663.69C672.47,570.07 726.64,476.48 780.77,382.87C727.46,287.58 674.16,192.29 620.84,97.02C597.36,96.62 573.87,96.17 550.39,95.77C456.76,254.88 363.15,414.01 269.51,573.12C251.02,540.78 232.53,508.43 214.06,476.07C307.99,317.39 401.77,158.61 495.82,0Z">
+              </path>
+            </g>
+          </svg>
+        </div>
+        <h1 style="position: absolute; color:grey; margin-bottom: 2em; margin-top: 3em;">Nazwa Firmy</h1>
+        
+      </div>      
+
+    </div>
+    <div class="col-sm-6 auth-form-section">
+      <div class="form-section">
+        <div class="auth-wrapper">
+          <h2 class="welcome-msg"> Witamy w Pracy </h2>
+          <br>
+          <h2 class="login-title">Zaloguj się</h2>
+          <form class="validate-form" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Nazwa Użytkownika</mat-label>
+                  <input matInput formControlName="username" />
+                  <mat-icon matSuffix>face</mat-icon>
+                  <mat-error *ngIf="authForm.get('username').hasError('required')">
+                    Nazwa Użytkownika jest wymagana
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-12col-lg-12 col-md-12 col-sm-12 mb-2">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>Hasło</mat-label>
+                  <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                  <a class="show-pwd-icon" href="#" onClick="return false;" matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </a>
+                  <mat-error *ngIf="authForm.get('password').hasError('required')">
+                    Hasło jest wymagane
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <!--<div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" value=""> Remember me
+                  <span class="form-check-sign">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>-->
+            </div>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+            <div class="container-auth-form-btn">
+              <div style="text-align:center">
+                <button mat-raised-button color="primary" [class.auth-spinner]="loading" [disabled]="loading"
+                  class="auth-form-btn" [disabled]="!authForm.valid " type="submit">Login</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

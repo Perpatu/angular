@@ -1,0 +1,104 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 ms-2 me-2 font-17">
+            {{dialogTitle}}</div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>zamknij</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="paymentForm" (ngSubmit)="submit">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Nazwa klienta</mat-label>
+            <input matInput formControlName="pName" required>
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-error *ngIf="paymentForm.get('pName').hasError('required')">
+              Nazwa klienta jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Employee Name</mat-label>
+            <input matInput formControlName="dName" required>
+            <mat-icon matSuffix>perm_identity</mat-icon>
+            <mat-error *ngIf="paymentForm.get('dName').hasError('required')">
+              Imię i Nazwisko pracownika
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Data</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="paymentForm.get('date').hasError('required')">
+              Proszę wybrać datę
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Opłaty</mat-label>
+            <input matInput formControlName="charges">
+            <mat-icon matSuffix>załącznik_pieniądze</mat-icon>
+            <mat-error *ngIf="paymentForm.get('charges').hasError('required')">
+              Opłaty są wymagane
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Podatek</mat-label>
+            <input matInput formControlName="tax">
+            <mat-icon matSuffix>opis</mat-icon>
+            <mat-error *ngIf="paymentForm.get('tax').hasError('required')">
+              Podatek jest wymagany
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Zniżka</mat-label>
+            <input matInput formControlName="discount">
+            <mat-icon matSuffix>lokalna_aktywność</mat-icon>
+            <mat-error *ngIf="paymentForm.get('discount').hasError('required')">
+              Zniżka jest wymagana
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Całkowity</mat-label>
+            <input matInput formControlName="total">
+            <mat-icon matSuffix>Paragon fiskalny</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row" align="end">
+            <button mat-raised-button color="primary" [type]="submit" [disabled]="!paymentForm.valid"
+              [mat-dialog-close]="1" (click)="confirmAdd()">Zapisz</button>
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Anuluj</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
